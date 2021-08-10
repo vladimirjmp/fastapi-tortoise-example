@@ -19,7 +19,7 @@ def shell():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(init())
 
-    embed(colors='neutral')
+    embed(colors='neutral', using='asyncio')
 
     loop.stop()
     sys.exit(0)
