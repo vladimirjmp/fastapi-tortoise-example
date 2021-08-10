@@ -4,7 +4,7 @@ import sys
 import typer
 import uvicorn
 from IPython import embed
-from tortoise import Tortoise
+from settings.db import init_tortoise
 
 app = typer.Typer()
 
@@ -17,20 +17,13 @@ def runserver():
 @app.command()
 def shell():
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(init())
+    loop.run_until_complete(init_tortoise())
 
     embed(colors='neutral', using='asyncio')
 
     loop.stop()
     sys.exit(0)
 
-
-async def init():
-    await Tortoise.init(
-        db_url='sqlite://db.sqlite3',
-        modules={'models': ['apis.timezone.models']}
-    )
-    # await Tortoise.generate_schemas()
 
 if __name__ == '__main__':
     app()

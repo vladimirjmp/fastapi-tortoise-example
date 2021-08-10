@@ -13,7 +13,7 @@ app.include_router(
 @app.get('/', include_in_schema=False)
 def index():
     return {
-        'message': 'Welcome!!!'
+        'message': 'Welcome home!!'
     }
 
 

@@ -26,13 +26,7 @@ async def get_city(city_id: UUID):
     '',
     response_model=CityIn_Pydantic,
     status_code=status.HTTP_201_CREATED,
-    responses={**responses.CREATE_CITY_RESPONSE},
-    openapi_extra={
-        "example": {
-            "name": "Lima",
-            "timezone": "America/Lima"
-        }
-    }
+    responses={**responses.CREATE_CITY_RESPONSE}
 )
 async def create_city(city: CityIn_Pydantic):
     """Service to create cities"""
