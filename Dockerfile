@@ -10,10 +10,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-openssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./requirements.txt ./requirements.txt
+COPY ./requirements/common.txt ./requirements.txt
 
 RUN  pip install -r ./requirements.txt
 
 COPY ./app /app
 
-# CMD [ "sh", "/start-reload.sh" ]
+CMD [ "sh", "/start-reload.sh" ]
