@@ -1,0 +1,15 @@
+# Common
+isort
+flake8
+pdbpp
+pytest
+ipython
+httpx
+requests
+uvicorn
+fastapi
+typer
+
+# Database
+#sqlalchemy
+tortoise-orm
