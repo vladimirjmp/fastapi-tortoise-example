@@ -1,7 +1,12 @@
+import logging
 from typing import Any, Dict
 from uuid import UUID
 
+from tortoise.exceptions import DoesNotExist
+
 from apis.timezone.models import City, City_Pydantic, CityIn_Pydantic
+
+logger = logging.getLogger(__name__)
 
 
 async def get_cities():
@@ -9,7 +14,8 @@ async def get_cities():
 
 
 async def get_city(*, city_id: UUID) -> Dict[str, Any]:
-    return await City_Pydantic.from_queryset_single(City.get(id=city_id))
+    city = await get_city_by_id(city_id=city_id)
+    return await City_Pydantic.from_tortoise_orm(city)
 
 
 async def create_city(*, city: CityIn_Pydantic) -> Dict[str, Any]:
@@ -18,4 +24,14 @@ async def create_city(*, city: CityIn_Pydantic) -> Dict[str, Any]:
 
 
 async def delete_city(*, city_id: UUID) -> None:
-    await City.filter(id=city_id).delete()
+    city = await get_city_by_id(city_id=city_id)
+    await city.delete()
+
+
+async def get_city_by_id(*, city_id: UUID) -> City:
+    try:
+        city = await City.get(id=city_id)
+        return city
+    except DoesNotExist:
+        logger.error(f' :: get_city_by_id :: city with id {city_id} not found')
+        raise DoesNotExist('The city doesn\'t exist')

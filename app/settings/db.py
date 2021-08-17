@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-from settings.constants import DB_URL
-from tortoise.contrib.fastapi import register_tortoise
 from tortoise import Tortoise
+from tortoise.contrib.fastapi import register_tortoise
+
+from settings.constants import DB_URL
 
 MODULES = {'models': ['apis.timezone.models']}
 

@@ -1,7 +1,12 @@
+import logging
+
 from tortoise import fields
 from tortoise.contrib.pydantic import pydantic_model_creator
 from tortoise.models import Model
+
 from utils.requests import get_current_time_sync
+
+logger = logging.getLogger(__name__)
 
 
 class City(Model):
@@ -16,7 +21,14 @@ class City(Model):
     updated_at = fields.DatetimeField(auto_now=True)
 
     def current_time(self) -> str:
-        current_time = get_current_time_sync(self.timezone)
+        try:
+            current_time = get_current_time_sync(self.timezone)
+        except Exception:
+            logger.error(
+                f' :: {__class__.__name__} :: current_time :: '
+                f'error trying to fetch {self.timezone}'
+            )
+            current_time = ''
         return current_time
 
     class PydanticMeta:

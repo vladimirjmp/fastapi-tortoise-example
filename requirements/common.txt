@@ -6,7 +6,7 @@ pytest
 ipython
 httpx
 requests
-# uvicorn
+python-multipart
 fastapi
 typer
 

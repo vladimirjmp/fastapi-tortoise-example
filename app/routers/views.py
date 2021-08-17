@@ -1,9 +1,10 @@
 from typing import List
 from uuid import UUID
 
+from fastapi import APIRouter, status
+
 from apis.timezone import services
 from apis.timezone.models import City_Pydantic, CityIn_Pydantic
-from fastapi import APIRouter, status
 from routers import responses
 
 router = APIRouter(
@@ -36,3 +37,4 @@ async def create_city(city: CityIn_Pydantic):
 @router.delete('/{city_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_city(city_id: UUID):
     await services.delete_city(city_id=city_id)
+    return {}

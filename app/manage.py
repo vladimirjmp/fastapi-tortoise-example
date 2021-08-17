@@ -4,6 +4,7 @@ import sys
 import typer
 import uvicorn
 from IPython import embed
+
 from settings.db import init_tortoise
 
 app = typer.Typer()
